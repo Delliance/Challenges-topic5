@@ -4,10 +4,9 @@ import com.danieltesting.jpa_relations_test.entity.Guardian;
 import com.danieltesting.jpa_relations_test.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 //@DataJpaTest //This one is to test the different repository layers, then after the test is completed we can flush the
@@ -22,8 +21,8 @@ class StudentRepositoryTest {
     @Test
     public void saveStudent(){
         Student dan = Student.builder()
-                .emailId("dan@gmail.com")
-                .firstName("Dan")
+                .emailId("dan1@gmail.com")
+                .firstName("Daniel")
                 .lastName("Gon")
 //                .guardianName("Who?")
 //                .guardianEmail("who@gmail.com")
@@ -42,13 +41,45 @@ class StudentRepositoryTest {
                 .build();
 
         Student dan = Student.builder()
-                .emailId("dan@gmail.com")
+                .emailId("dan2@gmail.com")
                 .firstName("Dan")
                 .lastName("Gon")
                 .guardian(who)
                 .build();
 
         studentRepository.save(dan);
+    }
+
+    @Test
+    public void printStudentByFirstName(){
+
+        List<Student> studentList = studentRepository.findStudentByFirstName("Dan");
+
+        System.out.println("students with name "+"Dan"+": "+studentList);
+
+    }
+
+    @Test
+    public void printStudentsNyFirstNameContaining(){
+
+        List<Student> studentList = studentRepository.findStudentByFirstNameContaining("Jo");
+
+        System.out.println("Students with "+"Jo"+": "+studentList);
+    }
+
+    @Test
+    public void printStudentsByGuardianName(){
+
+        List<Student> studentList = studentRepository.findByGuardianName("Who");
+
+        System.out.println("Students whose guardian is "+"Who"+": "+studentList);
+    }
+
+    @Test
+    public void printStudentByEmailId(){
+        Student student = studentRepository.getStudentByEmailId("dan1@gmail.com");
+
+        System.out.println("student = " + student);
     }
 
 

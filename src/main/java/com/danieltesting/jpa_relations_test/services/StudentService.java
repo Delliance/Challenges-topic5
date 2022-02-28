@@ -20,6 +20,26 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
+    public List<Student> getStudentsByName(String name){
+        return studentRepository.findStudentByFirstName(name);
+    }
+
+    public List<Student> getStudentsByNameContain(String name){
+        return studentRepository.findStudentByFirstNameContaining(name);
+    }
+
+    public List<Student> getStudentsByGuardianName(String name){
+        return studentRepository.findByGuardianName(name);
+    }
+
+    public Student getStudentByFirstAndLastName(String firstName, String lastName){
+        return studentRepository.findByFirstNameAndLastName(firstName, lastName);
+    }
+
+    public Student getStudentByEmailId(String email){
+        return studentRepository.getStudentByEmailId(email);
+    }
+
     public void addNewStudent(Student student) {
         Optional<Student> studentOptional = studentRepository.findStudentByEmailId(student.getEmailId());
 
