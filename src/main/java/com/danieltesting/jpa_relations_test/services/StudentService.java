@@ -40,6 +40,21 @@ public class StudentService {
         return studentRepository.getStudentByEmailId(email);
     }
 
+//    Only using this one in testing, not in the controller
+    public Student getStudentFirstNameByEmailId(String email){
+        return studentRepository.getStudentByEmailId(email);
+    }
+
+//    Only using this one in testing, not in the controller
+    public Student getStudentByEmailNative(String email){
+        return studentRepository.getStudentByEmailIdNative(email);
+    }
+
+//    Only using this one in testing, not in the controller
+    public Student getStudentByEmailNativeNamedParam(String email){
+        return studentRepository.getStudentByEmailIdNativeNamedParam(email);
+    }
+
     public void addNewStudent(Student student) {
         Optional<Student> studentOptional = studentRepository.findStudentByEmailId(student.getEmailId());
 
@@ -79,6 +94,15 @@ public class StudentService {
                 throw new IllegalStateException("Email taken");
             }
             student.setEmailId(email);
+        }
+
+    }
+
+    @Transactional
+    public void updateStudentFirstNameByEmail(String firstName, String email){
+
+        if (firstName != null && firstName.length() > 0){
+            studentRepository.updateStudentFirstNameByEmail(firstName, email);
         }
 
     }

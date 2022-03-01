@@ -10,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 //Builder won't work without an AllArgsConstructor, just using it for testing
 @Builder
+@ToString
 @Entity (name = "Student")
 @Table (
         name = "tbl_student",

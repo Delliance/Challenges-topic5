@@ -54,9 +54,14 @@ public class StudentController {
         studentService.deleteStudent(studentId);
     }
 
-    @PutMapping(path = "{studentId}")
+    @PutMapping(path = "/update/{studentId}")
     public void updateStudent (@PathVariable("studentId") long studentId, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) String email){
         studentService.updateStudent(studentId, firstName, lastName, email);
+    }
+
+    @PutMapping(path = "/update/emailFirstName/{emailId}&{firstName}")
+    public void updateStudentNameByEmail (@PathVariable("firstName") String firstName, @PathVariable("emailId") String emailId){
+        studentService.updateStudentFirstNameByEmail(firstName, emailId);
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
              //data, but here we want to affect the database, that's why it is marked as comment
 class StudentRepositoryTest {
 
-//    This test don't work anymore, please use the REST endpoints
+//    Here I will be testing only the repository, for the service I do it directly from POSTMAN
 
     @Autowired
     private StudentRepository studentRepository;
@@ -51,11 +51,20 @@ class StudentRepositoryTest {
     }
 
     @Test
+    public void printAllStudents(){
+
+        List<Student> studentList = studentRepository.findAll();
+
+        studentList.forEach(System.out::println);
+    }
+
+    @Test
     public void printStudentByFirstName(){
 
         List<Student> studentList = studentRepository.findStudentByFirstName("Dan");
 
-        System.out.println("students with name "+"Dan"+": "+studentList);
+        studentList.forEach(System.out::println);
+//        System.out.println("students with name "+"Dan"+": "+studentList);
 
     }
 
@@ -64,7 +73,8 @@ class StudentRepositoryTest {
 
         List<Student> studentList = studentRepository.findStudentByFirstNameContaining("Jo");
 
-        System.out.println("Students with "+"Jo"+": "+studentList);
+        studentList.forEach(System.out::println);
+//        System.out.println("Students with "+"Jo"+": "+studentList);
     }
 
     @Test
@@ -72,14 +82,49 @@ class StudentRepositoryTest {
 
         List<Student> studentList = studentRepository.findByGuardianName("Who");
 
-        System.out.println("Students whose guardian is "+"Who"+": "+studentList);
+        studentList.forEach(System.out::println);
+//        System.out.println("Students whose guardian is "+"Who"+": "+studentList.forEach(););
     }
 
     @Test
     public void printStudentByEmailId(){
         Student student = studentRepository.getStudentByEmailId("dan1@gmail.com");
 
-        System.out.println("student = " + student);
+        System.out.println("student = " + student.toString());
+    }
+
+    @Test
+    public void printStudentFirstNameByEmailId(){
+        String firstName = studentRepository.getStudentFirstNameByEmailId("dan1@gmail.com");
+
+        System.out.println("firstName = " + firstName);
+    }
+
+    @Test
+    public void printStudentByEmailNative(){
+        Student student = studentRepository.getStudentByEmailIdNative("dan1@gmail.com");
+
+        System.out.println("student.toString() = " + student.toString());
+    }
+
+    @Test
+    public void printStudentByEmailNativeNamedParam(){
+        Student student = studentRepository.getStudentByEmailIdNativeNamedParam("dan1@gmail.com");
+
+        System.out.println("student.toString() = " + student.toString());
+    }
+
+    @Test
+    public void updateStudentNameByEmail(){
+
+        String email = "dan3@gmail.com";
+
+        System.out.println("before = "+studentRepository.getStudentFirstNameByEmailId(email));
+
+        studentRepository.updateStudentFirstNameByEmail("Karl", email);
+
+        System.out.println("after = "+studentRepository.getStudentFirstNameByEmailId(email));
+
     }
 
 
