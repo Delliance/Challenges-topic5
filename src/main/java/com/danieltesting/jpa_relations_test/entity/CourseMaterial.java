@@ -1,9 +1,6 @@
 package com.danieltesting.jpa_relations_test.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+//We are ding lazy Fetch, so if you don't exclude the course it'll give an exception
+@ToString(exclude = "course")
 public class CourseMaterial {
 
     @Id
@@ -32,7 +31,9 @@ public class CourseMaterial {
     private String url;
 
     @OneToOne( //Here we are defining that for one course there will be one course material
-        cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, //LAZY: When you call the CourseMaterial, it does not call the info of Course, unless specified; EAGER: when you call the course material, it also calls the info of the course
+            optional = false //this is so when you try to save a course, a course material is required
     )
     @JoinColumn(
             name = "course_id", //here any name we want to give, I chose the same as the reference Column

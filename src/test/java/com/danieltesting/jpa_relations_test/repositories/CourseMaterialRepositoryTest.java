@@ -5,6 +5,9 @@ import com.danieltesting.jpa_relations_test.entity.CourseMaterial;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +33,13 @@ class CourseMaterialRepositoryTest {
 //        This by itself won't work, it'll throw an exception, because the course MUST be already in the database
 //        to solve it we need to do cascading, this is done in the @OneToOne annotation in the CourseMaterial class
         courseMaterialRepository.save(courseMaterial);
+    }
+
+    @Test
+    public void printAllCourseMaterials(){
+        List<CourseMaterial> courseMaterialList = courseMaterialRepository.findAll();
+
+        courseMaterialList.forEach(System.out::println);
     }
 
 }
